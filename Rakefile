@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "mongoid-xapian"
   gem.homepage = "http://github.com/dcu/mongoid-xapian"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{FTS for mongoid using xapian}
+  gem.description = %Q{Full text search for mongoid using xapian}
   gem.email = "krawek@gmail.com"
   gem.authors = ["David A. Cuadrado"]
   # dependencies defined in Gemfile
