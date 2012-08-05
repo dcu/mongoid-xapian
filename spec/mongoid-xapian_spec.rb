@@ -33,6 +33,7 @@ describe "MongoidXapian" do
     before do
       @blogpost = BlogPost.create(:title => "this is the title", :body => "this is body")
       MongoidXapian.index!
+      @blogpost.reload
     end
 
     it "should update the index" do

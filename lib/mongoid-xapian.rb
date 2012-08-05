@@ -17,6 +17,8 @@ module MongoidXapian
       attr_accessor :xapian_options, :xapian_fields
     end
 
+    MongoidXapian.indexable_models << self.to_s
+
     field :xapian_id, :type => Integer
 
     after_create do |doc|
@@ -29,7 +31,7 @@ module MongoidXapian
       needs_indexing = false
       # see if at least one changed field is indexable
       doc.changes.each do |key, value|
-        if doc.class.xapian_fields.include?(key)
+        if doc.class.xapian_fields.include?(key.to_sym)
           needs_indexing = true
           break
         end
@@ -66,6 +68,11 @@ module MongoidXapian
   # short cut for MongoidXapian::Trail.index_all!
   def self.index!
     MongoidXapian::Trail.index_all!
+  end
+
+  # List of indexable models
+  def self.indexable_models
+    @indexable_models ||= Set.new
   end
 
   module ClassMethods
