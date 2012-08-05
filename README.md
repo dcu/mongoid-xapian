@@ -1,8 +1,8 @@
-= mongoid-xapian
+# mongoid-xapian
 
 Xapian for mongoid
 
-== Usage
+## Usage
 
 Include MongoidXapian in your model and define what fields need to be
 indexed.
@@ -15,16 +15,21 @@ indexed.
     end
 
 now you have to run `MongoidXapian.index!` to index the changes into
-xapian.
-A rake task called `xapian:index` is also provided.
+xapian. if you have a background job processor like delayed job you can
+do something like:
 
-once you configure your model and index it you can search it using:
+    MongoidXapian.delay.index!
+
+A rake task called `xapian:index` is also provided so you can setup a
+cron task to run it periodically.
+
+Once you configure your model and index the changes you can perform searches using:
 
     YourModel.search(query)
 
 
 
-== Contributing to mongoid-xapian
+## Contributing to mongoid-xapian
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
@@ -34,7 +39,7 @@ once you configure your model and index it you can search it using:
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-== Copyright
+## Copyright
 
 Copyright (c) 2012 David A. Cuadrado. See LICENSE.txt for
 further details.
