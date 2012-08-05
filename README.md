@@ -1,6 +1,28 @@
 = mongoid-xapian
 
-Description goes here.
+Xapian for mongoid
+
+== Usage
+
+Include MongoidXapian in your model and define what fields need to be
+indexed.
+
+    class YourModel
+      include Mongoid::Document
+      include MongoidXapian
+
+      fti :title, :body
+    end
+
+now you have to run `MongoidXapian.index!` to index the changes into
+xapian.
+A rake task called `xapian:index` is also provided.
+
+once you configure your model and index it you can search it using:
+
+    YourModel.search(query)
+
+
 
 == Contributing to mongoid-xapian
  

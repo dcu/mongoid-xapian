@@ -59,6 +59,12 @@ module MongoidXapian
 
   module ClassMethods
     def fti(*args)
+      # make sure id is not in the list
+      args.delete(:id)
+
+      # index mongodb' id
+      args << :_id
+ 
       @xapian_options = args.extract_options!
       @xapian_fields = args
     end
@@ -73,12 +79,24 @@ module MongoidXapian
       })
     end
 
+    def search_db(language = "en")
+      XapianFu::XapianDb.new({
+        :dir => self.xapian_db_path(language),
+        :create => false,
+        :store => @xapian_fields
+      })
+    end
+
     def xapian_db_path(language = "en")
-      "#{Bundler.root}/db/#{self.to_s.underscore}.#{language}.db"
+      "#{Bundler.root}/xapian/#{self.to_s.underscore}.#{language}.db"
     end
 
     def search(pattern, language = "en")
-      xapian_db(language).search(pattern)
+      ids = search_db(language).search(pattern).map do |result|
+        result.values[:_id]
+      end
+
+      self.where(:_id.in => ids)
     end
   end
 end
