@@ -8,14 +8,20 @@ namespace :xapian do
     MongoidXapian::Trail.index_all!
   end
 
-  desc "Reindex all documents in the given model. pass MODEL=ModelName to this task"
+  desc "Reindex all documents in the given model"
   task :reindex do
-    model = ENV['MODEL'].constantize
-    model.all.each do |doc|
-      MongoidXapian::Trail.create!(:action => :update,
-                                   :doc_id => doc.id,
-                                   :doc_type => doc.class.to_s)
-      MongoidXapian::Trail.index_all!
+    MongoidXapian.indexable_models.each do |mod|
+      model_class = mod.constantize rescue nil
+      if model_class
+        puts ">> Indexing #{model_class}..."
+
+        model_class.all.each do |doc|
+          MongoidXapian::Trail.create!(:action => :update,
+                                       :doc_id => doc.id,
+                                       :doc_type => doc.class.to_s)
+          MongoidXapian::Trail.index_all!
+        end
+      end
     end
   end
 end

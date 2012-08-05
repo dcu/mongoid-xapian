@@ -56,13 +56,15 @@ module MongoidXapian
 
     def update_document
       with_xapian_database do |db|
-        if indexable.xapian_id.to_i > 0
-          xapian_doc = XapianFu::XapianDoc.new(indexable.to_xapian.merge(:id => indexable.xapian_id), :xapian_db => db)
-          xapian_doc.save
-        else
-          xapian_doc = db.add_doc(indexable.to_xapian)
-          indexable.set(:xapian_id, xapian_doc.id)
-          indexable.xapian_id = xapian_doc.id
+        if indexable.present?
+          if indexable.xapian_id.to_i > 0
+            xapian_doc = XapianFu::XapianDoc.new(indexable.to_xapian.merge(:id => indexable.xapian_id), :xapian_db => db)
+            xapian_doc.save
+          else
+            xapian_doc = db.add_doc(indexable.to_xapian)
+            indexable.set(:xapian_id, xapian_doc.id)
+            indexable.xapian_id = xapian_doc.id
+          end
         end
       end
     end
