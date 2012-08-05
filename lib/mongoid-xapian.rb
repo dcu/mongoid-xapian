@@ -26,9 +26,20 @@ module MongoidXapian
     end
 
     after_update do |doc|
-      MongoidXapian::Trail.create(:action => :update,
-                                  :doc_type => doc.class.to_s,
-                                  :doc_id => doc.id)
+      needs_indexing = false
+      # see if at least one changed field is indexable
+      doc.changes.each do |key, value|
+        if doc.class.xapian_fields.include?(key)
+          needs_indexing = true
+          break
+        end
+      end
+
+      if needs_indexing
+        MongoidXapian::Trail.create(:action => :update,
+                                    :doc_type => doc.class.to_s,
+                                    :doc_id => doc.id)
+      end
     end
 
     after_destroy do |doc|
