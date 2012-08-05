@@ -91,8 +91,9 @@ module MongoidXapian
       "#{Bundler.root}/xapian/#{self.to_s.underscore}.#{language}.db"
     end
 
-    def search(pattern, language = "en")
-      ids = search_db(language).search(pattern).map do |result|
+    def search(pattern, opts = {})
+      language = opts.delete(:language) || 'en'
+      ids = search_db(language).search(pattern, opts).map do |result|
         result.values[:_id]
       end
 
