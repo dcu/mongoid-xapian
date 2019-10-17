@@ -12,7 +12,7 @@ gem 'xapian-fu'
 group :development do
   gem "pry"
   gem "rspec", "~> 2.8.0"
-  gem "yard", "~> 0.7"
+  gem "yard", "~> 0.9"
   gem "rdoc", "~> 3.12"
   gem "bundler"
   gem "jeweler", "~> 1.8.4"
