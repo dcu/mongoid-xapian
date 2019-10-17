@@ -50,7 +50,7 @@ GEM
     tzinfo (0.3.33)
     xapian-fu (1.5.0)
     xapian-ruby (1.2.12)
-    yard (0.8.2.1)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
@@ -65,4 +65,4 @@ DEPENDENCIES
   simplecov
   xapian-fu
   xapian-ruby
-  yard (~> 0.7)
+  yard (~> 0.9)
