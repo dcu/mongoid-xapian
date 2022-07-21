@@ -47,7 +47,7 @@ GEM
       simplecov-html (~> 0.5.3)
     simplecov-html (0.5.3)
     slop (3.3.2)
-    tzinfo (0.3.33)
+    tzinfo (0.3.61)
     xapian-fu (1.5.0)
     xapian-ruby (1.2.12)
     yard (0.8.2.1)
